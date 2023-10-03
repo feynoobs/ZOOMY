@@ -4,8 +4,10 @@ import android.opengl.GLSurfaceView
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.ArCoreApk
+import com.google.ar.core.Config
 import com.google.ar.core.Session
 import jp.co.fssoft.zoomy.R
+import jp.co.fssoft.zoomy.utility.CameraPermissionHelper
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -36,10 +38,26 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer
         if (session == null) {
             val req = ArCoreApk.getInstance().requestInstall(this, !installRequested)
             if (req == ArCoreApk.InstallStatus.INSTALLED) {
-
+                installRequested = true
             }
-
-            session = Session(this)
+            else {
+                if (!CameraPermissionHelper.hasCameraPermission(this)) {
+                    CameraPermissionHelper.requestCameraPermission(this)
+                }
+                else {
+                    session = Session(this)
+                    val config = session!!.config
+                    val depthSupported = session!!.isDepthModeSupported(Config.DepthMode.AUTOMATIC)
+                    if (depthSupported == true) {
+                        config.depthMode = Config.DepthMode.AUTOMATIC
+                    }
+                    else {
+                        config.depthMode = Config.DepthMode.DISABLED
+                    }
+                    surfaceView.onResume()
+                    
+                }
+            }
         }
     }
 
