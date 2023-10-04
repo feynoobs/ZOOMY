@@ -47,14 +47,14 @@ class DisplayRotationHelper(private val context: Context) : DisplayManager.Displ
 
     public fun getCameraSensorRelativeViewportAspectRatio(cameraId: String) : Float
     {
-        var aspectRatio: Float
+        val aspectRatio: Float
         val cameraSensorToDisplayRotation = getCameraSensorToDisplayRotation(cameraId)
         aspectRatio =
             when (cameraSensorToDisplayRotation) {
-                0   -> viewportWidth as Float / viewportWidth as Float
-                90  -> viewportHeight as Float / viewportWidth as Float
-                180 -> viewportWidth as Float / viewportWidth as Float
-                270 -> viewportHeight as Float / viewportWidth as Float
+                0   -> viewportWidth!!.toFloat() / viewportWidth!!.toFloat()
+                90  -> viewportHeight!!.toFloat() / viewportWidth!!.toFloat()
+                180 -> viewportWidth!!.toFloat() / viewportWidth!!.toFloat()
+                270 -> viewportHeight!!.toFloat() / viewportWidth!!.toFloat()
                 else -> 0.0F
             }
         return aspectRatio
