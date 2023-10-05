@@ -13,6 +13,7 @@ class CameraPermissionHelper
 {
     companion object
     {
+        private val TAG = this::class.simpleName
         private val CAMERA_PERMISSION_CODE = 0
         private val CAMERA_PERMISSION = Manifest.permission.CAMERA
 

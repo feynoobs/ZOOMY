@@ -19,6 +19,11 @@ class DisplayRotationHelper(private val context: Context) : DisplayManager.Displ
     private val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val display: Display = windowManager.defaultDisplay
 
+    companion object
+    {
+        private val TAG = this::class.simpleName
+    }
+
     public fun onResume()
     {
         displayManager.registerDisplayListener(this, null)
